@@ -9,5 +9,4 @@ fn main() {
     print!("Part 2: ");
     december_1::part2();
     println!("");
-
 }

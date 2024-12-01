@@ -1,6 +1,6 @@
-use std::fs;
-use std::error::Error;
 use std::collections::HashMap;
+use std::error::Error;
+use std::fs;
 
 pub fn part1() {
     let path = "/Users/edverma/Development/aoc-2024/src/december_1/input.txt";
@@ -11,11 +11,15 @@ pub fn part1() {
     for line in text.lines() {
         let mut whitespace_iter = line.split_whitespace();
         let num_str_1 = whitespace_iter.next().expect("failed to find number");
-        let num_1: i32 = num_str_1.parse().expect("failed to parse string as integer");
+        let num_1: i32 = num_str_1
+            .parse()
+            .expect("failed to parse string as integer");
         list1.push(num_1);
 
         let num_str_2 = whitespace_iter.next().expect("failed to find number");
-        let num_2: i32 = num_str_2.parse().expect("failed to parse string as integer");
+        let num_2: i32 = num_str_2
+            .parse()
+            .expect("failed to parse string as integer");
         list2.push(num_2);
     }
 
@@ -32,7 +36,8 @@ pub fn part1() {
 }
 
 pub fn part2() {
-    let result: Result<String, Box<dyn Error>> = read_file_content_as_string("/Users/edverma/Development/aoc-2024/src/december_1/input.txt");
+    let result: Result<String, Box<dyn Error>> =
+        read_file_content_as_string("/Users/edverma/Development/aoc-2024/src/december_1/input.txt");
     let text: String = result.expect("failed to read file content");
 
     let mut left_list = Vec::new();
@@ -40,11 +45,15 @@ pub fn part2() {
     for line in text.lines() {
         let mut whitespace_iter = line.split_whitespace();
         let num_str_1 = whitespace_iter.next().expect("failed to find number");
-        let num_1: i32 = num_str_1.parse().expect("failed to parse string as integer");
+        let num_1: i32 = num_str_1
+            .parse()
+            .expect("failed to parse string as integer");
         left_list.push(num_1);
 
         let num_str_2 = whitespace_iter.next().expect("failed to find number");
-        let num_2: i32 = num_str_2.parse().expect("failed to parse string as integer");
+        let num_2: i32 = num_str_2
+            .parse()
+            .expect("failed to parse string as integer");
         *right_map.entry(num_2).or_insert(0) += 1;
     }
 
