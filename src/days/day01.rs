@@ -1,10 +1,16 @@
 use std::collections::HashMap;
-use std::error::Error;
-use std::fs;
 
-pub fn part1() {
-    let path = "/Users/edverma/Development/aoc-2024/src/december_1/input.txt";
-    let text = read_file_content_as_string(path).expect("failed to read file content");
+pub fn solve() {
+    println!("Day 1: ");
+    println!("\tPart 1: {}", part1());
+    println!("\tPart 2: {}", part2());
+    println!();
+}
+
+pub fn part1() -> i32 {
+    let path = "/Users/edverma/Development/aoc-2024/inputs/day01.txt";
+    let text = super::super::utils::read_file_content_as_string(path)
+        .expect("failed to read file content");
 
     let mut list1 = Vec::new();
     let mut list2 = Vec::new();
@@ -32,13 +38,13 @@ pub fn part1() {
         diff += temp_diff.abs();
     }
 
-    println!("{}", diff)
+    diff
 }
 
-pub fn part2() {
-    let result: Result<String, Box<dyn Error>> =
-        read_file_content_as_string("/Users/edverma/Development/aoc-2024/src/december_1/input.txt");
-    let text: String = result.expect("failed to read file content");
+pub fn part2() -> i32 {
+    let path = "/Users/edverma/Development/aoc-2024/inputs/day01.txt";
+    let text = super::super::utils::read_file_content_as_string(path)
+        .expect("failed to read file content");
 
     let mut left_list = Vec::new();
     let mut right_map = HashMap::new();
@@ -64,10 +70,5 @@ pub fn part2() {
         }
     }
 
-    println!("{}", similarity_score);
-}
-
-fn read_file_content_as_string(path: &str) -> Result<String, Box<dyn std::error::Error>> {
-    let string_content: String = fs::read_to_string(path)?;
-    Ok(string_content)
+    similarity_score
 }
