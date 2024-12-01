@@ -3,8 +3,8 @@ use std::error::Error;
 use std::collections::HashMap;
 
 pub fn part1() {
-    let result: Result<String, Box<dyn Error>> = read_file_content_as_string("/Users/edverma/Development/aoc-2024/src/december_1/input.txt");
-    let text: String = result.expect("failed to read file content");
+    let path = "/Users/edverma/Development/aoc-2024/src/december_1/input.txt";
+    let text = read_file_content_as_string(path).expect("failed to read file content");
 
     let mut list1 = Vec::new();
     let mut list2 = Vec::new();
