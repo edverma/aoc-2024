@@ -8,5 +8,5 @@ fn main() {
     december_1::part1();
     print!("Part 2: ");
     december_1::part2();
-    println!("");
+    println!();
 }
