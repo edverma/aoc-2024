@@ -5,7 +5,7 @@ fn main() {
     println!("Advent of Code 2024 Answers:\n");
     days::day01::solve();
 
-    //    days::day02::solve();
+    days::day02::solve();
     //    days::day03::solve();
     //    days::day04::solve();
     //    days::day05::solve();
