@@ -1,3 +1,5 @@
+use super::super::utils;
+
 pub fn solve() {
     println!("Day 2: ");
     println!("\tPart 1: {}", part1());
@@ -6,10 +8,8 @@ pub fn solve() {
 }
 
 fn part1() -> i32 {
-    let text = super::super::utils::read_file_content_as_string(
-        super::super::utils::get_path("day02.txt").as_str(),
-    )
-    .expect("failed to read file content");
+    let text = utils::read_file_content_as_string(utils::get_path("day02.txt").as_str())
+        .expect("failed to read file content");
 
     let mut num_safe = 0;
     for line in text.lines() {
@@ -52,10 +52,8 @@ fn part1() -> i32 {
 }
 
 fn part2() -> i32 {
-    let text = super::super::utils::read_file_content_as_string(
-        super::super::utils::get_path("day02.txt").as_str(),
-    )
-    .expect("failed to read file content");
+    let text = utils::read_file_content_as_string(utils::get_path("day02.txt").as_str())
+        .expect("failed to read file content");
 
     let mut num_safe = 0;
     for line in text.lines() {

@@ -1,3 +1,4 @@
+use super::super::utils;
 use regex::Regex;
 use std::collections::HashMap;
 
@@ -10,10 +11,8 @@ pub fn solve() {
 
 // get sum of middle numbers of all correct inputs
 fn part1() -> i32 {
-    let text = super::super::utils::read_file_content_as_string(
-        super::super::utils::get_path("day05.txt").as_str(),
-    )
-    .expect("failed to read file content");
+    let text = utils::read_file_content_as_string(utils::get_path("day05.txt").as_str())
+        .expect("failed to read file content");
 
     let (rules_map, updates_list) = get_rules_map_and_updates_list(text.as_str());
 
@@ -51,10 +50,8 @@ fn part1() -> i32 {
 
 // reorder invalid updates and return sum of middle number of each reordered update
 fn part2() -> i32 {
-    let text = super::super::utils::read_file_content_as_string(
-        super::super::utils::get_path("day05.txt").as_str(),
-    )
-    .expect("failed to read file content");
+    let text = utils::read_file_content_as_string(utils::get_path("day05.txt").as_str())
+        .expect("failed to read file content");
 
     let (rules_map, updates_list) = get_rules_map_and_updates_list(text.as_str());
 

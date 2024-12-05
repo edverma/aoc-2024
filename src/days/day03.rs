@@ -1,3 +1,4 @@
+use super::super::utils;
 use regex::Regex;
 
 pub fn solve() {
@@ -9,10 +10,8 @@ pub fn solve() {
 
 fn part1() -> i32 {
     let mut res = 0;
-    let text = super::super::utils::read_file_content_as_string(
-        super::super::utils::get_path("day03.txt").as_str(),
-    )
-    .expect("failed to read file content");
+    let text = utils::read_file_content_as_string(utils::get_path("day03.txt").as_str())
+        .expect("failed to read file content");
 
     let re = Regex::new(r"mul\(\d+,\d+\)").unwrap();
     let groups_re = Regex::new(r"(\d+),(\d+)").unwrap();
@@ -29,10 +28,8 @@ fn part1() -> i32 {
 }
 
 fn part2() -> i32 {
-    let text = super::super::utils::read_file_content_as_string(
-        super::super::utils::get_path("day03.txt").as_str(),
-    )
-    .expect("failed to read file content");
+    let text = utils::read_file_content_as_string(utils::get_path("day03.txt").as_str())
+        .expect("failed to read file content");
 
     let re = Regex::new(r"mul\((\d+),(\d+)\)|(do\(\))|(don't\(\))").unwrap();
     let mut res = 0;

@@ -1,3 +1,4 @@
+use super::super::utils;
 use std::collections::HashMap;
 
 pub fn solve() {
@@ -8,10 +9,8 @@ pub fn solve() {
 }
 
 pub fn part1() -> i32 {
-    let text = super::super::utils::read_file_content_as_string(
-        super::super::utils::get_path("day01.txt").as_str(),
-    )
-    .expect("failed to read file content");
+    let text = utils::read_file_content_as_string(utils::get_path("day01.txt").as_str())
+        .expect("failed to read file content");
 
     let mut list1 = Vec::new();
     let mut list2 = Vec::new();
@@ -44,8 +43,7 @@ pub fn part1() -> i32 {
 
 pub fn part2() -> i32 {
     let path = "/Users/edverma/Development/aoc-2024/inputs/day01.txt";
-    let text = super::super::utils::read_file_content_as_string(path)
-        .expect("failed to read file content");
+    let text = utils::read_file_content_as_string(path).expect("failed to read file content");
 
     let mut left_list = Vec::new();
     let mut right_map = HashMap::new();
