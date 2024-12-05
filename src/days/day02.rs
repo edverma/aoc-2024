@@ -1,4 +1,4 @@
-use super::super::utils;
+use super::utils;
 
 pub fn solve() {
     println!("Day 2: ");
