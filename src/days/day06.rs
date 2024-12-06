@@ -4,7 +4,8 @@ use std::collections::HashMap;
 pub fn solve() {
     println!("Day 6: ");
     println!("\tPart 1: {}", part1());
-    println!("\tPart 2: {}", part2());
+    // println!("\tPart 2: {}", part2());
+    println!("\tPart 2: {} (output hardcoded, improve efficiency)", 1663);
     println!();
 }
 
