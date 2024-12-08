@@ -97,88 +97,58 @@ fn part2() -> i64 {
             })
             .collect();
 
-        fn do_concat(eq_nums: &Vec<i64>, index: usize, concat_len: usize) -> i64 {
-            let mut num_strings: Vec<String> = Vec::new();
-            for i in index..index + concat_len {
-                num_strings.push(eq_nums[i].to_string());
+        let chars: [char; 3] = ['+', '*', '|'];
+        let mut operations: Vec<Vec<char>> = Vec::new();
+        let mut current: Vec<char> = Vec::new();
+        let size = eq_nums.len() - 1;
+
+        fn fill_ops(
+            operations: &mut Vec<Vec<char>>,
+            current: &mut Vec<char>,
+            size: usize,
+            chars: [char; 3],
+        ) {
+            if current.len() == size {
+                operations.push(current.clone());
+                return;
             }
 
-            let mut num_string = String::new();
-            for s in num_strings {
-                num_string = num_string + &s;
-            }
-
-            num_string.parse().unwrap()
-        }
-
-        let mut inputs: Vec<Vec<i64>> = Vec::new();
-        for concat_len in 1..eq_nums.len() + 1 {
-            // TODO: recursively push new permutations of concatenations
-            for j in 0..eq_nums.len() - concat_len + 1 {
-                inputs.push(Vec::new());
-                let num = do_concat(&eq_nums, j, concat_len);
-                let last_elem_index = inputs.len() - 1;
-                inputs[last_elem_index].extend(eq_nums.clone()[0..j].iter());
-                inputs[last_elem_index].push(num);
-                inputs[last_elem_index].extend(eq_nums.clone()[j + 1..eq_nums.len()].iter());
+            for c in chars {
+                current.push(c);
+                fill_ops(operations, current, size, chars);
+                current.pop();
             }
         }
 
-        println!("{:?}", inputs);
+        fill_ops(&mut operations, &mut current, size, chars);
 
-        for input in inputs {
-            let mut found = false;
-            let chars: [char; 2] = ['+', '*'];
-            let mut operations: Vec<Vec<char>> = Vec::new();
-            let mut current: Vec<char> = Vec::new();
-            let size = input.len() - 1;
-
-            fn fill_ops(
-                operations: &mut Vec<Vec<char>>,
-                current: &mut Vec<char>,
-                size: usize,
-                chars: [char; 2],
-            ) {
-                if current.len() == size {
-                    operations.push(current.clone());
-                    return;
-                }
-
-                for c in chars {
-                    current.push(c);
-                    fill_ops(operations, current, size, chars);
-                    current.pop();
-                }
-            }
-
-            fill_ops(&mut operations, &mut current, size, chars);
-
-            for op in operations {
-                let mut val: i64 = input[0];
-                for i in 1..input.len() {
-                    if op[i - 1] == '+' {
-                        val += input[i]
-                    } else if op[i - 1] == '*' {
-                        if let Some(v) = val.checked_mul(input[i]) {
-                            val = v;
-                        } else {
-                            break;
-                        }
+        for op in operations {
+            let mut val: i64 = eq_nums[0];
+            for i in 1..eq_nums.len() {
+                if op[i - 1] == '+' {
+                    val += eq_nums[i]
+                } else if op[i - 1] == '*' {
+                    if let Some(v) = val.checked_mul(eq_nums[i]) {
+                        val = v;
                     }
-                }
-
-                if val == res_num {
-                    found = true;
-                    sum += res_num;
-                    break;
+                } else if op[i - 1] == '|' {
+                    val = do_concat(val, eq_nums[i]);
                 }
             }
 
-            if found {
+            if val == res_num {
+                sum += res_num;
                 break;
             }
         }
     }
 
     sum
+}
+
+fn do_concat(num1: i64, num2: i64) -> i64 {
+    let str1 = num1.to_string();
+    let str2 = num2.to_string();
+    let num: String = str1 + str2.as_str();
+    num.parse().unwrap()
 }
