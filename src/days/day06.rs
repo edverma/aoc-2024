@@ -193,10 +193,10 @@ fn check_loop(
                 }
                 let next_pos = (cur_pos.0 - 1, cur_pos.1);
                 if (next_pos.0, next_pos.1) == (new_blockade_pos.0, new_blockade_pos.1) {
-                    if dir_map.get(&0).is_some() {
-                        return (matrix, true);
+                    if let std::collections::hash_map::Entry::Vacant(e) = dir_map.entry(0) {
+                        e.insert(1);
                     } else {
-                        dir_map.insert(0, 1);
+                        return (matrix, true);
                     }
                 }
 
@@ -214,10 +214,10 @@ fn check_loop(
                 }
                 let next_pos = (cur_pos.0 + 1, cur_pos.1);
                 if (next_pos.0, next_pos.1) == (new_blockade_pos.0, new_blockade_pos.1) {
-                    if dir_map.get(&1).is_some() {
-                        return (matrix, true);
+                    if let std::collections::hash_map::Entry::Vacant(e) = dir_map.entry(1) {
+                        e.insert(1);
                     } else {
-                        dir_map.insert(1, 1);
+                        return (matrix, true);
                     }
                 }
 
@@ -235,10 +235,10 @@ fn check_loop(
                 }
                 let next_pos = (cur_pos.0, cur_pos.1 + 1);
                 if (next_pos.0, next_pos.1) == (new_blockade_pos.0, new_blockade_pos.1) {
-                    if dir_map.get(&2).is_some() {
-                        return (matrix, true);
+                    if let std::collections::hash_map::Entry::Vacant(e) = dir_map.entry(2) {
+                        e.insert(1);
                     } else {
-                        dir_map.insert(2, 1);
+                        return (matrix, true);
                     }
                 }
 
@@ -256,10 +256,10 @@ fn check_loop(
                 }
                 let next_pos = (cur_pos.0, cur_pos.1 - 1);
                 if (next_pos.0, next_pos.1) == (new_blockade_pos.0, new_blockade_pos.1) {
-                    if dir_map.get(&3).is_some() {
-                        return (matrix, true);
+                    if let std::collections::hash_map::Entry::Vacant(e) = dir_map.entry(3) {
+                        e.insert(1);
                     } else {
-                        dir_map.insert(3, 1);
+                        return (matrix, true);
                     }
                 }
 
@@ -277,7 +277,7 @@ fn check_loop(
 }
 
 fn get_all_guard_coordinates(
-    matrix: &mut Vec<Vec<char>>,
+    matrix: &mut [Vec<char>],
     mut cur_pos: (usize, usize),
 ) -> Vec<(usize, usize)> {
     let mut direction: Direction = Direction::Up;
