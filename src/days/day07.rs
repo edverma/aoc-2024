@@ -1,15 +1,24 @@
 use super::utils;
 use regex::Regex;
+// use std::time::Instant;
 
 pub fn solve() {
     println!("Day 7: ");
     println!("\tPart 1: {}", part1());
-    // println!("\tPart 2: {}", part2());
+
+    /*
+    let start = Instant::now(); // Record the start time
+    println!("\tPart 2: {}", part2());
+    let duration = start.elapsed(); // Calculate the elapsed time
+    println!("Time taken: {:?}", duration);
+    */
+
     let answer: i64 = 95297119227552;
     println!(
         "\tPart 2: {} (output hardcoded, improve efficiency)",
         answer
     );
+
     println!();
 }
 
@@ -127,8 +136,14 @@ fn part2() -> i64 {
 
         for op in operations {
             let mut val: i64 = eq_nums[0];
+            if val > res_num {
+                continue;
+            }
+
             for i in 1..eq_nums.len() {
-                if op[i - 1] == '+' {
+                if val > res_num {
+                    break;
+                } else if op[i - 1] == '+' {
                     val += eq_nums[i]
                 } else if op[i - 1] == '*' {
                     if let Some(v) = val.checked_mul(eq_nums[i]) {
@@ -150,8 +165,7 @@ fn part2() -> i64 {
 }
 
 fn do_concat(num1: i64, num2: i64) -> i64 {
-    let str1 = num1.to_string();
-    let str2 = num2.to_string();
-    let num: String = str1 + str2.as_str();
-    num.parse().unwrap()
+    (num1.to_string() + num2.to_string().as_str())
+        .parse()
+        .unwrap()
 }

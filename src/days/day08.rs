@@ -3,7 +3,7 @@ use std::collections::{HashMap, HashSet};
 use super::utils;
 
 pub fn solve() {
-    println!("Day 7: ");
+    println!("Day 8: ");
     println!("\tPart 1: {}", part1());
     println!("\tPart 2: {}", part2());
     println!();

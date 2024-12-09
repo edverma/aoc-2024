@@ -4,8 +4,8 @@ use std::collections::HashMap;
 pub fn solve() {
     println!("Day 6: ");
     println!("\tPart 1: {}", part1());
-    // println!("\tPart 2: {}", part2());
-    println!("\tPart 2: {} (output hardcoded, improve efficiency)", 1663);
+    println!("\tPart 2: {}", part2());
+    //println!("\tPart 2: {} (output hardcoded, improve efficiency)", 1663);
     println!();
 }
 
@@ -131,11 +131,24 @@ fn part2() -> i32 {
         }
     }
 
+    let all_guard_coordinates = get_all_guard_coordinates(&mut matrix, start_pos);
+
     let mut num_unique_blockades = 0;
     let mut cloned_matrix = matrix.clone();
     for (i, row) in matrix.iter().enumerate() {
         for (j, _c) in row.iter().enumerate() {
             if (i, j) == start_pos {
+                continue;
+            }
+
+            let mut is_guard_coordinate = false;
+            for coord in &all_guard_coordinates {
+                if *coord == (i, j) {
+                    is_guard_coordinate = true;
+                    break;
+                }
+            }
+            if !is_guard_coordinate {
                 continue;
             }
 
@@ -180,12 +193,8 @@ fn check_loop(
                 }
                 let next_pos = (cur_pos.0 - 1, cur_pos.1);
                 if (next_pos.0, next_pos.1) == (new_blockade_pos.0, new_blockade_pos.1) {
-                    if let Some(n) = dir_map.get(&0) {
-                        if *n > 0 {
-                            return (matrix, true);
-                        }
-
-                        dir_map.insert(0, *n + 1);
+                    if dir_map.get(&0).is_some() {
+                        return (matrix, true);
                     } else {
                         dir_map.insert(0, 1);
                     }
@@ -205,12 +214,8 @@ fn check_loop(
                 }
                 let next_pos = (cur_pos.0 + 1, cur_pos.1);
                 if (next_pos.0, next_pos.1) == (new_blockade_pos.0, new_blockade_pos.1) {
-                    if let Some(n) = dir_map.get(&1) {
-                        if *n > 0 {
-                            return (matrix, true);
-                        }
-
-                        dir_map.insert(1, *n + 1);
+                    if dir_map.get(&1).is_some() {
+                        return (matrix, true);
                     } else {
                         dir_map.insert(1, 1);
                     }
@@ -230,12 +235,8 @@ fn check_loop(
                 }
                 let next_pos = (cur_pos.0, cur_pos.1 + 1);
                 if (next_pos.0, next_pos.1) == (new_blockade_pos.0, new_blockade_pos.1) {
-                    if let Some(n) = dir_map.get(&2) {
-                        if *n > 0 {
-                            return (matrix, true);
-                        }
-
-                        dir_map.insert(2, *n + 1);
+                    if dir_map.get(&2).is_some() {
+                        return (matrix, true);
                     } else {
                         dir_map.insert(2, 1);
                     }
@@ -255,12 +256,8 @@ fn check_loop(
                 }
                 let next_pos = (cur_pos.0, cur_pos.1 - 1);
                 if (next_pos.0, next_pos.1) == (new_blockade_pos.0, new_blockade_pos.1) {
-                    if let Some(n) = dir_map.get(&3) {
-                        if *n > 0 {
-                            return (matrix, true);
-                        }
-
-                        dir_map.insert(3, *n + 1);
+                    if dir_map.get(&3).is_some() {
+                        return (matrix, true);
                     } else {
                         dir_map.insert(3, 1);
                     }
@@ -277,4 +274,91 @@ fn check_loop(
     }
 
     (matrix, false)
+}
+
+fn get_all_guard_coordinates(
+    matrix: &mut Vec<Vec<char>>,
+    mut cur_pos: (usize, usize),
+) -> Vec<(usize, usize)> {
+    let mut direction: Direction = Direction::Up;
+    let mut valid = true;
+    while valid {
+        match direction {
+            Direction::Up => {
+                matrix[cur_pos.0][cur_pos.1] = 'X';
+
+                if cur_pos.0 == 0 {
+                    valid = false;
+                    continue;
+                }
+                let next_pos = (cur_pos.0 - 1, cur_pos.1);
+
+                let next_c = matrix[next_pos.0][next_pos.1];
+                if next_c == '#' {
+                    direction = Direction::Right;
+                } else {
+                    cur_pos = next_pos
+                }
+            }
+            Direction::Down => {
+                matrix[cur_pos.0][cur_pos.1] = 'X';
+
+                if cur_pos.0 == matrix.len() - 1 {
+                    valid = false;
+                    continue;
+                }
+                let next_pos = (cur_pos.0 + 1, cur_pos.1);
+
+                let next_c = matrix[next_pos.0][next_pos.1];
+                if next_c == '#' {
+                    direction = Direction::Left;
+                } else {
+                    cur_pos = next_pos
+                }
+            }
+            Direction::Right => {
+                matrix[cur_pos.0][cur_pos.1] = 'X';
+
+                if cur_pos.1 == matrix[cur_pos.0].len() - 1 {
+                    valid = false;
+                    continue;
+                }
+                let next_pos = (cur_pos.0, cur_pos.1 + 1);
+
+                let next_c = matrix[next_pos.0][next_pos.1];
+                if next_c == '#' {
+                    direction = Direction::Down;
+                } else {
+                    cur_pos = next_pos
+                }
+            }
+            Direction::Left => {
+                matrix[cur_pos.0][cur_pos.1] = 'X';
+
+                if cur_pos.1 == 0 {
+                    valid = false;
+                    continue;
+                }
+                let next_pos = (cur_pos.0, cur_pos.1 - 1);
+
+                let next_c = matrix[next_pos.0][next_pos.1];
+                if next_c == '#' {
+                    direction = Direction::Up;
+                } else {
+                    cur_pos = next_pos
+                }
+            }
+        }
+    }
+
+    let mut all_guard_coordinates: Vec<(usize, usize)> = Vec::new();
+    for (i, row) in matrix.iter().enumerate() {
+        for (j, c) in row.iter().enumerate() {
+            if *c == 'X' {
+                all_guard_coordinates.push((i, j));
+            }
+        }
+    }
+
+    all_guard_coordinates
 }
