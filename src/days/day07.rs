@@ -27,9 +27,8 @@ fn part1() -> i64 {
         let eq_nums: Vec<i64> = re_eq
             .find_iter(line)
             .map(|m| {
-                let num: i64;
                 let s = &m.as_str()[1..];
-                num = s.parse().unwrap();
+                let num: i64 = s.parse().unwrap();
                 num
             })
             .collect();
@@ -95,9 +94,8 @@ fn part2() -> i64 {
         let eq_nums: Vec<i64> = re_eq
             .find_iter(line)
             .map(|m| {
-                let num: i64;
                 let s = &m.as_str()[1..];
-                num = s.parse().unwrap();
+                let num: i64 = s.parse().unwrap();
                 num
             })
             .collect();
